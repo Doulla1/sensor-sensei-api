@@ -9,11 +9,18 @@ class SensorDataController extends Controller
 {
     public function store(Request $request)
     {
-        $sensorData = new SensorData();
-        $sensorData->timestamp = $request->timestamp;
-        $sensorData->sensor_type = $request->sensor_type;
-        $sensorData->value = json_encode($request->value);  // Encodez les valeurs en JSON
-        $sensorData->save();
+        $timestamp = $request->timestamp;
+        $sensors = $request->sensors;
+
+        foreach ($sensors as $sensorType => $sensorValues) {
+            foreach ($sensorValues as $valueType => $value) {
+                $sensorData = new SensorData();
+                $sensorData->timestamp = $timestamp;
+                $sensorData->sensor_type = "{$sensorType}_{$valueType}";
+                $sensorData->value = json_encode($value);  // Stockez la valeur comme JSON
+                $sensorData->save();
+            }
+        }
 
         return response()->json(['status' => 'success'], 201);
     }
