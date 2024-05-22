@@ -10,4 +10,8 @@ class SensorData extends Model
     use HasFactory;
 
     protected $fillable = ['timestamp', 'sensor_type', 'value'];
+
+    protected $casts = [
+        'value' => 'array',  // la colonne value contient un tableau JSON
+    ];
 }

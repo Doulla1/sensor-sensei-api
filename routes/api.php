@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SensorDataController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::post('/data', [SensorDataController::class, 'store']);
+Route::get('/data', [SensorDataController::class, 'index']);
